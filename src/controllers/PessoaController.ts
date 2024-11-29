@@ -2,13 +2,13 @@ import { Request, Response } from "express";
 import { Pessoa } from "../models";
 
 class PessoaController {
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async create(req: Request, res: Response):Promise<any> {
     const { nome, idade, email, fone } = req.body;
     try {
       const pessoa = await Pessoa.create({ nome, idade, email, fone });
       const resp = await pessoa.save();
       return res.status(201).json(resp);
-    } catch (error) {
+    } catch (error:any) {
       if (error.code === 11000 || error.code === 11001) {
         return res.json({ message: "Este e-mail já está em uso!" });
       } else if (error && error.errors["mail"]) {
@@ -22,16 +22,16 @@ class PessoaController {
     }
   }
 
-  public async list(_: Request, res: Response): Promise<Response> {
+  public async list(_: Request, res: Response):Promise<any> {
     try {
     const pessoas = await Pessoa.find().sort({ nome: 1 });
       return res.json(pessoas);
-    } catch (error) {
+    } catch (error:any) {
       return res.json({ message: error.message });
     }
   }
 
-  public async update(req: Request, res: Response): Promise<Response> {
+  public async update(req: Request, res: Response):Promise<any> {
     const { id } = req.params;
     const { nome, idade, email, fone } = req.body;
     try {
@@ -45,7 +45,7 @@ class PessoaController {
       pessoa.fone = fone;
       const resp = await pessoa.save();
       return res.json(resp);
-    } catch (error) {
+    } catch (error:any) {
       if (error.code === 11000 || error.code === 11001) {
         return res.json({ message: "Este e-mail já está em uso!" });
       } else if (error && error.errors["mail"]) {
@@ -59,7 +59,7 @@ class PessoaController {
     }
   }
 
-  public async delete(req: Request, res: Response): Promise<Response> {
+  public async delete(req: Request, res: Response):Promise<any> {
     const { id } = req.params;
     try {
       const pessoa = await Pessoa.findByIdAndDelete(id);
@@ -70,7 +70,7 @@ class PessoaController {
       } else {
         return res.json({ message: "Registro não encontrado" });
       }
-    } catch (error) {
+    } catch (error:any) {
       return res.json({ message: error.message });
     }
   }

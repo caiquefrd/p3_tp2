@@ -1,4 +1,5 @@
 class DisciplinaModel{
+    id:string = ""
     descricao: string;
     curso: string;
     semestre: number;

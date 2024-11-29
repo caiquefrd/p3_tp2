@@ -1,6 +1,7 @@
 import { Pessoa } from './index';
 
 class EstudanteModel{
+    id:string = ""
     ra: number;
     media: number;
     pessoa: string;
